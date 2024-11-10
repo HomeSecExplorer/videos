@@ -1,6 +1,6 @@
 # Documentation for
 
-#### Basic Nextcloud Installation : Step-by-Step Guide
+#### : Step-by-Step Guide
 
 [YouTube video](https://youtu.be/f3wAeAeF3Ec)
 
@@ -45,22 +45,27 @@ Change:
   - **display_errors = Off**
   - **output_buffering = Off**
   - **zend_extension=opcache**
-  - under *[opcache]*
-    - **opcache.enable = 1**
-    - **opcache.interned_strings_buffer = 8**
-    - **opcache.max_accelerated_files = 10000**
-    - **opcache.memory_consumption = 128**
-    - **opcache.save_comments = 1**
-    - **opcache.revalidate_freq = 1**
+  - under **[opcache]**
+    - ```
+      opcache.enable = 1
+      opcache.interned_strings_buffer = 8
+      opcache.max_accelerated_files = 10000
+      opcache.memory_consumption = 128
+      opcache.save_comments = 1
+      opcache.revalidate_freq = 1
+      ```
 
+In:
 ```
 sudo nano /etc/php/8.2/mods-available/apcu.ini
 ```
 Add:
-  - **apc.enable_cli=1**
+```
+apc.enable_cli=1
+```
 
 Restart apache:
-````
+```
 sudo systemctl restart apache2
 ```
 
@@ -124,14 +129,6 @@ Set owner and group:
 sudo chown -R www-data:www-data nextcloud
 ```
 
-Edit Nextcloud config:
-```
-sudo nano /var/www/nextcloud/config/config.php
-```
-  - under **'trusted_domains' =>** edit the array and add your domain name
-  - change **'overwrite.cli.url' =>** to your domain name
-  - add ```'memcache.local' => '\OC\Memcache\APCu',``` before **);**
-
 Add cron job:
 ```
 sudo crontab -u www-data -e
@@ -191,7 +188,17 @@ sudo systemctl restart apache2
 
 ## *Install Nextcloud*
 
-Open **https://YourServer** and set the options
+Open **https://YourServer** and follow the setup
+
+Edit Nextcloud config:
+```
+sudo nano /var/www/nextcloud/config/config.php
+```
+  - under **'trusted_domains' =>** edit the array and add your domain name
+  - change **'overwrite.cli.url' =>** to your domain name
+  - add ```'memcache.local' => '\OC\Memcache\APCu',``` before **);**
+
+Open **https://YourServer**
 
 Go to **Administration settings/Basic settings**
   - Make sure *Background jobs* is **Cron**
