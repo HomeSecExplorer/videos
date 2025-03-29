@@ -75,7 +75,7 @@ endpoints:
 ```
 docker run -d \
   --name gatus \
-  -p 8080:8080 \
+  -p 80:8080 \
   -v ~/gatus/config.yaml:/config/config.yaml \
   twinproduction/gatus
 ```
